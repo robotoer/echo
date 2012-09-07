@@ -19,6 +19,13 @@ trait Event[T] {
    */
   protected[echo] def hook(block: Occurrence[T] => Unit)
 
+  /**Executes the specified code block every time this Event
+   * occurs.
+   */
+  def foreach(code: T => Unit) {
+    hook(occ => code(occ.value))
+  }
+
   /**Returns a new Event that's occurrence values
    * are are the result of of transforming the
    * callee's occurrences with the given function (occurrence
